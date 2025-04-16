@@ -140,20 +140,20 @@
                 <img src="img/yny.jpeg" alt="Yan Yen Blog"
                     class="w-full h-[600px] rounded-lg border-8 border-black shadow-2xl" style="object-fit: cover;" />
                 <div class="absolute -top-8 -right-8 text-6xl jump-animate">🌟</div>
-                <div class="absolute -bottom-4 -left-4 text-4xl coin-spin">🪙</div>
+                <div class="absolute -bottom-4 -left-4 text-4xl coin-spin">🌓</div>
             </div>
         </div>
     </section>
 
     <!-- Floating Coins -->
     <div class="absolute top-1/4 left-1/4 text-2xl coin-spin" style="animation-delay: 0.5s">
-        🪙
+        🌓
     </div>
     <div class="absolute top-1/3 right-1/4 text-2xl coin-spin" style="animation-delay: 1s">
-        🪙
+        🌓
     </div>
     <div class="absolute top-1/2 left-1/3 text-2xl coin-spin" style="animation-delay: 1.5s">
-        🪙
+        🌓
     </div>
 
     <!-- About Section -->
