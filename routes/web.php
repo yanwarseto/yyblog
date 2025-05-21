@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\Settings;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,3 +21,9 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/auths', [Auth::class, 'showLoginForm'])->name('login.form');
 
 Route::post('/login', [Auth::class, 'login'])->name('login.submit');
+
+Route::get('/dashboard', [Dashboard::class, 'index'])
+    ->middleware('check.session');
+
+Route::get('/settings', [Settings::class, 'index'])
+    ->middleware('check.session');
