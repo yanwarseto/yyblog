@@ -22,8 +22,7 @@ Route::get('/auths', [Auth::class, 'showLoginForm'])->name('login.form');
 
 Route::post('/login', [Auth::class, 'login'])->name('login.submit');
 
-Route::get('/dashboard', [Dashboard::class, 'index'])
+Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboards')
     ->middleware('check.session');
 
-Route::get('/settings', [Settings::class, 'index'])
-    ->middleware('check.session');
+Route::get('/logout', [Dashboard::class, 'logout'])->name('logout');

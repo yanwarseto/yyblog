@@ -4,80 +4,70 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mario Bros Dashboard</title>
+    <title>Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            background: #5c94fc url('https://i.imgur.com/UdVx1ZP.png') repeat-x;
-            font-family: 'Press Start 2P', cursive;
-        }
-
-        .brick {
-            background: url('https://i.imgur.com/s5H4UsT.png') no-repeat center center;
-            background-size: cover;
-        }
-
-        .icon-box {
-            width: 32px;
-            height: 32px;
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 
-<body class="text-white">
+<body class="bg-gray-100 flex min-h-screen">
 
-    <div class="min-h-screen flex flex-col md:flex-row">
-        <!-- Sidebar -->
-        <aside class="bg-green-600 w-full md:w-64 p-4 space-y-4">
-            <div class="text-center mb-6">
-                <img src="https://i0.wp.com/www.pinnyshop.com/wp-content/uploads/2021/01/smb-anniversary-smb-mushroom.png?fit=800,800&ssl=1"
-                    alt="Mario" class="w-16 mx-auto">
-                <h2 class="text-yellow-300 text-sm mt-2">MARIO DASH</h2>
-            </div>
-            <nav class="space-y-2 text-sm">
-                <a href="/dashboard" class="block px-4 py-2 rounded bg-green-800 hover:bg-green-700">🏠 Dashboard</a>
-                <a href="/settings" class="block px-4 py-2 rounded bg-green-800 hover:bg-green-700">👥 Users</a>
-                <a href="#" class="block px-4 py-2 rounded bg-green-800 hover:bg-green-700">⚙️ Settings</a>
-                <a href="#" class="block px-4 py-2 rounded bg-red-800 hover:bg-red-700">🚪 Logout</a>
-            </nav>
-        </aside>
+    <!-- Sidebar for Desktop -->
+    <aside class="hidden md:flex md:flex-col w-64 bg-white shadow-lg p-6 space-y-6">
+        <h1 class="text-2xl font-bold text-blue-600">My Dashboard</h1>
+        <nav class="flex flex-col gap-4">
+            <a href="{{ route('dashboards') }}" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Journey</a>
+            <a href="{{ route('logout') }}" class="text-red-500 hover:text-red-700 font-medium">Logout</a>
+        </nav>
+    </aside>
 
-        <!-- Main Content -->
-        <main class="flex-1 p-6">
-            <h1 class="text-2xl text-yellow-300 mb-6 text-center md:text-left">👋 Welcome, Mario!</h1>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Card 1 -->
-                <div class="brick rounded-lg p-4 text-center shadow-md">
-                    <img src="https://i.imgur.com/NKsK28J.png" class="w-8 h-8 mx-auto mb-2" alt="Mushroom">
-                    <p class="text-yellow-200 text-lg">47</p>
-                    <p class="text-sm text-white">New Orders</p>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="brick rounded-lg p-4 text-center shadow-md">
-                    <img src="https://i.imgur.com/GbQEbT4.png" class="w-8 h-8 mx-auto mb-2" alt="Star">
-                    <p class="text-yellow-200 text-lg">123</p>
-                    <p class="text-sm text-white">Visitors</p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="brick rounded-lg p-4 text-center shadow-md">
-                    <img src="https://i.imgur.com/34xvV2n.png" class="w-8 h-8 mx-auto mb-2" alt="Fire Flower">
-                    <p class="text-yellow-200 text-lg">12</p>
-                    <p class="text-sm text-white">New Users</p>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="brick rounded-lg p-4 text-center shadow-md">
-                    <img src="https://i.imgur.com/BRw7snk.png" class="w-8 h-8 mx-auto mb-2" alt="? Box">
-                    <p class="text-yellow-200 text-lg">10</p>
-                    <p class="text-sm text-white">Reports</p>
-                </div>
-            </div>
-        </main>
+    <!-- Mobile Menu Toggle -->
+    <div
+        class="md:hidden fixed top-0 left-0 right-0 bg-white shadow-md z-50 flex items-center justify-between px-4 py-3">
+        <h1 class="text-xl font-bold text-blue-600">My Dashboard</h1>
+        <button id="menuToggle" class="text-gray-700 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
     </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden fixed top-14 left-0 w-full bg-white shadow-lg hidden z-40">
+        <nav class="flex flex-col gap-4 p-4">
+            <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Journey</a>
+            <a href="#" class="text-red-500 hover:text-red-700 font-medium">Logout</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 mt-14 md:mt-0">
+        <h2 class="text-3xl font-semibold text-gray-800 mb-6">Welcome to your Dashboard</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-xl font-semibold text-gray-700">Statistik</h3>
+                <p class="text-gray-500 mt-2">Data statistik pengguna atau aktivitas.</p>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-xl font-semibold text-gray-700">Aktivitas Terakhir</h3>
+                <p class="text-gray-500 mt-2">Riwayat aktivitas pengguna terbaru.</p>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-xl font-semibold text-gray-700">Pengaturan</h3>
+                <p class="text-gray-500 mt-2">Ubah pengaturan pengguna di sini.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const toggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('mobileMenu');
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
 </body>
 
 </html>

@@ -63,6 +63,17 @@
             });
         </script>
     @endif
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "{{ session('success') }}",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
 </body>
 
 </html>
