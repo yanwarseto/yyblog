@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Response;
 
 class Auth extends Controller
 {
@@ -33,7 +34,7 @@ class Auth extends Controller
         $hashedPassword = hash('sha1', md5($password));
 
 
-        $user = \DB::table('T_USERS')->where('USERNAME', $username)->first();
+        $user = DB::table('T_USERS')->where('USERNAME', $username)->first();
 
         if (!$user) {
             return back()->withErrors([
@@ -45,7 +46,7 @@ class Auth extends Controller
             // Password salah
             return back()->withErrors([
                 'Password salah.',
-            ])->onlyInput('username');
+            ])->onlyInput('password');
         }
 
         // Saving Log Login

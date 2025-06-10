@@ -313,7 +313,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="suggest" class="bg-red-500 py-16 relative">
+    <section id="contact" class="bg-red-500 py-16 relative">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h2 class="text-4xl font-bold text-white mb-4">GOT A SUGGESTION?</h2>
