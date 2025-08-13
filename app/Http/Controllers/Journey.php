@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 
 class Journey extends Controller
 {
@@ -145,5 +146,28 @@ class Journey extends Controller
             'success' => true,
             'data' => $journeys,
         ]);
+    }
+
+    public function sendSuggestion(Request $request)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'name'       => 'required|string|max:100',
+            'email'      => 'required|email',
+            'suggestion' => 'required|string|max:1000',
+        ]);
+
+        // Kirim email
+        Mail::raw(
+            "From: {$validated['name']} ({$validated['email']})\n\n" .
+                "Suggestion:\n" . $validated['suggestion'],
+            function ($message) use ($validated) {
+                $message->to('yanwarsetop@gmail.com')
+                    ->to('yenitatyani@gmail.com')
+                    ->subject('New Suggestion from Viewer');
+            }
+        );
+
+        return back()->with('success', 'Thanks for your suggestion!');
     }
 }

@@ -327,7 +327,7 @@
                         class="block">
                         <div
                             class="bg-gray-100 rounded-lg border-4 border-black overflow-hidden transform hover:scale-105 transition">
-                            <img src="storage/perjalanan/{{ $l->IMG }}" alt="Street Food Jakarta"
+                            <img src="storage/perjalanan/{{ $l->IMG }}" alt="Our Journey"
                                 class="w-full h-48 object-cover" />
                             <div class="p-6">
                                 <h3 class="text-xl font-bold mb-2">{{ $l->JUDUL }}</h3>
@@ -386,7 +386,7 @@
 
 
     <!-- Contact Section -->
-    <section id="contact" class="bg-red-500 py-16 relative">
+    <section id="contact" class="bg-red-500 py-16 relative ">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h2 class="text-4xl font-bold text-white mb-4">GOT A SUGGESTION?</h2>
@@ -395,22 +395,23 @@
                     Know a must-visit spot in Jakarta or beyond? Tell us where our next adventure should be!
                 </p>
             </div>
-            <div class="max-w-2xl mx-auto bg-white rounded-lg border-4 border-black p-8 relative">
+            <div class="max-w-2xl mx-auto bg-white rounded-lg border-4 border-black p-8 relative mb-2">
                 <div class="absolute -top-6 -right-6 text-4xl jump-animate">📍</div>
-                <form>
+                <form method="POST" action="{{ route('send.suggestion') }}">
+                    @csrf
                     <div class="mb-6">
                         <label for="name" class="block text-black font-bold mb-2">Your Name</label>
-                        <input type="text" id="name"
+                        <input type="text" id="name" name="name"
                             class="w-full px-4 py-2 border-2 border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" />
                     </div>
                     <div class="mb-6">
                         <label for="email" class="block text-black font-bold mb-2">Your Email</label>
-                        <input type="email" id="email"
+                        <input type="email" id="email" name="email"
                             class="w-full px-4 py-2 border-2 border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" />
                     </div>
                     <div class="mb-6">
                         <label for="suggestion" class="block text-black font-bold mb-2">Your Suggestion</label>
-                        <textarea id="suggestion" rows="5"
+                        <textarea id="suggestion" name="suggestion" rows="5"
                             class="w-full px-4 py-2 border-2 border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             placeholder="Where should Yan & Yen explore next?"></textarea>
                     </div>
@@ -419,9 +420,10 @@
                         SEND SUGGESTION
                     </button>
                 </form>
+
             </div>
         </div>
-        <div class="absolute bottom-0 left-0 w-full h-16 bg-black"></div>
+        <div class="absolute bottom-0 left-0 w-full h-16 bg-black "></div>
     </section>
 
     <!-- Footer -->

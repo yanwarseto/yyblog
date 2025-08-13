@@ -44,3 +44,5 @@ Route::get('/ourjourney/{id}', [Journey::class, 'getDetail']);
 Route::get('/ourjourney/{id}', [Journey::class, 'getDetail']);
 
 Route::get('/journeys', [Journey::class, 'getAll'])->name('journeys.getAll');
+
+Route::post('/send-suggestion', [Journey::class, 'sendSuggestion'])->name('send.suggestion');
