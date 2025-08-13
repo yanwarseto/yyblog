@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\JsonResponse;
 
 class Journey extends Controller
 {
@@ -117,5 +118,32 @@ class Journey extends Controller
         DB::table('JOURNEY')->where('ID', $id)->update($updateData);
 
         return redirect()->route('journey')->with('success', 'Journey berhasil diperbarui!');
+    }
+
+    public function ourJourney()
+    {
+        $data['listJourney'] = DB::table('JOURNEY')->orderBy('DATE', 'desc')->paginate(6);
+        return view('ourjourney_v', $data);
+    }
+
+    public function getDetail($id)
+    {
+        $journey = DB::table('JOURNEY')->where('ID', $id)->first(); // Assuming you have a Journey model
+
+        if ($journey) {
+            return response()->json(['detail' => $journey->DETAIL]); // Return the detail as JSON
+        } else {
+            return response()->json(['detail' => 'Detail not found'], 404);
+        }
+    }
+
+    public function getAll(): JsonResponse
+    {
+        $journeys = DB::table('JOURNEY')->get();
+        // Return as JSON response
+        return response()->json([
+            'success' => true,
+            'data' => $journeys,
+        ]);
     }
 }

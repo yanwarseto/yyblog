@@ -74,6 +74,61 @@
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2341b06e"><rect width="8" height="8"/></svg>');
             background-size: 16px 16px;
         }
+
+        /* for journey */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1000;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* Modal base styles */
+        #myModal {
+            @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50 opacity-0 pointer-events-none transition-opacity duration-300;
+        }
+
+        #myModal.open {
+            @apply opacity-100 pointer-events-auto;
+        }
+
+        .modal-content {
+            @apply bg-white rounded-lg p-6 max-w-lg w-[90vw] max-h-[90vh] overflow-auto shadow-lg relative;
+        }
+
+        /* Close button */
+        .modal-close {
+            @apply absolute top-3 right-3 text-3xl font-bold cursor-pointer select-none transition-colors duration-200 text-gray-700 hover:text-red-600;
+        }
+
+        /* Tags in modal */
+        .modal-tag {
+            @apply text-black px-2 py-1 rounded text-sm bg-blue-300;
+        }
     </style>
 </head>
 
@@ -93,12 +148,15 @@
     <header class="container mx-auto px-4 py-8 relative z-10">
         <div class="flex justify-between items-center">
             <div class="flex items-center">
-                <div class="text-4xl mr-2 jump-animate">💑</div>
-                <h1
-                    class="text-3xl font-bold text-white bg-red-500 px-4 py-2 rounded-lg border-4 border-black shadow-lg">
-                    Y<span class="text-yellow-300" style="padding-left: 10px;padding-right:10px">&</span>Y Adventures
-                </h1>
+                <a href="/" class="flex items-center space-x-2 no-underline">
+                    <div class="text-4xl mr-2 jump-animate select-none">👨‍❤️‍👩</div>
+                    <h1
+                        class="text-3xl font-bold text-white bg-red-500 px-4 py-2 rounded-lg border-4 border-black shadow-lg">
+                        Y<span class="text-yellow-300 px-2">&</span>Y Adventures
+                    </h1>
+                </a>
             </div>
+
             <nav class="hidden md:flex space-x-4">
                 <a href="#about"
                     class="bg-yellow-400 text-white px-4 py-2 rounded-lg border-4 border-black font-bold hover:bg-yellow-300 transition">ABOUT</a>
@@ -263,54 +321,69 @@
                 <div class="w-32 h-2 bg-red-500 mx-auto mb-6"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div
-                    class="bg-gray-100 rounded-lg border-4 border-black overflow-hidden transform hover:scale-105 transition">
-                    <img src="img/recent1.jpg" alt="Jakarta Cafe Hopping" class="w-full h-48 object-cover" />
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Jakarta Cafe Hopping: Hidden Gems</h3>
-                        <p class="text-gray-700 mb-4">
-                            Discovering the coziest and most unique cafes in the city.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-teal-200 text-black px-2 py-1 rounded text-sm">Cafes</span>
-                            <span class="bg-yellow-200 text-black px-2 py-1 rounded text-sm">Jakarta</span>
-                            <span class="bg-gray-300 text-black px-2 py-1 rounded text-sm">Relaxing</span>
+                @foreach ($listJourney as $l)
+                    <a href="javascript:void(0);"
+                        onclick="openModal('{{ $l->IMG }}', '{{ $l->JUDUL }}', '{{ $l->DATE }}', '{{ $l->TAG }}', '{{ $l->ID }}')"
+                        class="block">
+                        <div
+                            class="bg-gray-100 rounded-lg border-4 border-black overflow-hidden transform hover:scale-105 transition">
+                            <img src="storage/perjalanan/{{ $l->IMG }}" alt="Street Food Jakarta"
+                                class="w-full h-48 object-cover" />
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">{{ $l->JUDUL }}</h3>
+                                <time datetime="2024-04-10"
+                                    class="text-gray-700 italic mb-5">{{ $l->DATE }}</time>
+
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    @foreach (explode(',', $l->TAG) as $tag)
+                                        @php
+                                            $tag = trim($tag);
+                                            $colors = [
+                                                'bg-red-300',
+                                                'bg-green-300',
+                                                'bg-blue-300',
+                                                'bg-yellow-300',
+                                                'bg-purple-300',
+                                                'bg-orange-300',
+                                            ];
+                                            $hash = crc32($tag); // Or md5($tag) for a longer hash (more unique colors)
+                                            $index = abs($hash) % count($colors); // Ensure index is within the bounds of the array
+                                            $randomColor = $colors[$index];
+                                        @endphp
+                                        @if ($tag != '')
+                                            <span
+                                                class="text-black px-2 py-1 rounded text-sm {{ $randomColor }}">{{ $tag }}</span>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div
-                    class="bg-gray-100 rounded-lg border-4 border-black overflow-hidden transform hover:scale-105 transition">
-                    <img src="img/recent2.jpg" alt="Bandung Weekend Getaway" class="w-full h-48 object-cover" />
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Bandung Weekend: Nature & Food</h3>
-                        <p class="text-gray-700 mb-4">
-                            Exploring the scenic beauty and delicious cuisine of Bandung.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-green-200 text-black px-2 py-1 rounded text-sm">Bandung</span>
-                            <span class="bg-orange-200 text-black px-2 py-1 rounded text-sm">Nature</span>
-                            <span class="bg-red-200 text-black px-2 py-1 rounded text-sm">Food</span>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="bg-gray-100 rounded-lg border-4 border-black overflow-hidden transform hover:scale-105 transition">
-                    <img src="img/recent3.jpg" alt="Street Food Jakarta" class="w-full h-48 object-cover" />
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Jakarta Street Food Adventure</h3>
-                        <p class="text-gray-700 mb-4">
-                            A deep dive into the vibrant world of Jakarta's street eats.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-red-300 text-black px-2 py-1 rounded text-sm">Street Food</span>
-                            <span class="bg-yellow-200 text-black px-2 py-1 rounded text-sm">Jakarta</span>
-                            <span class="bg-lime-200 text-black px-2 py-1 rounded text-sm">Local</span>
-                        </div>
-                    </div>
-                </div>
+                    </a>
+                @endforeach
+            </div>
+            <div class="text-center mt-4">
+
+                <h2 class="text-4xl font-bold text-red-600 ">Wanna Read Another ?</h2>
+                <a href="/ourjourney" role="button"
+                    class="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg border-4 border-black transition transform hover:scale-105 w-6/12 inline-block text-center">
+                    Read More ..
+                </a>
             </div>
         </div>
     </section>
+
+    {{-- Modal Journey --}}
+    <div id="myModal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="modal-content bg-white rounded-lg p-6">
+            <span class="close cursor-pointer text-black float-right">&times;</span>
+            <img id="modalImage" src="" alt="Journey Image" class="w-full h-48 object-cover mb-4" />
+            <h3 id="modalTitle" class="text-xl font-bold mb-2"></h3>
+            <time id="modalDate" class="text-gray-700 italic mb-5 font-bold"></time>
+            <div id="modalDetail" class="mt-4"></div>
+            <div id="modalTags" class="flex flex-wrap gap-2 mt-2"></div>
+        </div>
+    </div>
+
 
     <!-- Contact Section -->
     <section id="contact" class="bg-red-500 py-16 relative">
@@ -374,7 +447,7 @@
             <div class="flex">
                 <div
                     class="w-16 h-16 bg-red-500 border-4 border-black rounded-full flex items-center justify-center text-2xl jump-animate">
-                    💑
+                    👨‍❤️‍👩
                 </div>
             </div>
         </div>
@@ -384,6 +457,57 @@
     <div class="fixed bottom-4 left-0 text-4xl move-right" style="animation-duration: 20s; z-index: 20">
         <div class="jump-animate" style="animation-duration: 0.8s">🏃‍♂️</div>
     </div>
+
+    <script>
+        function openModal(image, title, date, tags, id) {
+            document.getElementById("modalImage").src = "storage/perjalanan/" + image;
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalDate").innerText = date;
+
+            const tagsContainer = document.getElementById("modalTags");
+            tagsContainer.innerHTML = ''; // Clear previous tags
+
+            // Split tags and trim whitespace
+            const tagArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+
+            tagArray.forEach(tag => {
+                const tagElement = document.createElement("span");
+                tagElement.className = "text-black px-2 py-1 rounded text-sm bg-blue-300"; // Example color
+                tagElement.innerText = tag;
+                tagsContainer.appendChild(tagElement);
+            });
+
+            // Fetch detail using the ID
+            fetch(`/ourjourney/${id}`) // Adjust the URL according to your routing
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Assuming the detail is in data.detail
+                    document.getElementById("modalDetail").innerHTML = data.detail; // Set the detail in the modal
+                    document.getElementById("myModal").style.display = "flex"; // Show the modal
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        // Close modal functionality
+        document.querySelector('.close').onclick = function() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        // Close modal when clicking outside of the modal content
+        window.onclick = function(event) {
+            const modal = document.getElementById("myModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>

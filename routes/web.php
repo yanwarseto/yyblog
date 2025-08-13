@@ -36,3 +36,11 @@ Route::delete('/journey/{id}', [Journey::class, 'destroy'])->name('journey.delet
 Route::put('/journey/{id}', [Journey::class, 'update'])->name('journey.update');
 
 Route::get('/logout', [Dashboard::class, 'logout'])->name('logout');
+
+Route::get('/ourjourney', [Journey::class, 'ourJourney'])->name('dataJourney');
+
+Route::get('/ourjourney/{id}', [Journey::class, 'getDetail']);
+
+Route::get('/ourjourney/{id}', [Journey::class, 'getDetail']);
+
+Route::get('/journeys', [Journey::class, 'getAll'])->name('journeys.getAll');
