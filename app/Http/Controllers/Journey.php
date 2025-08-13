@@ -16,7 +16,7 @@ class Journey extends Controller
     {
         $data['username'] = session('username');
 
-        $data['listJourney'] = DB::table('JOURNEY')->get();
+        $data['listJourney'] = DB::table('BLOG.JOURNEY')->get();
         return view('admin.journeylist_v', $data);
     }
 
@@ -49,7 +49,7 @@ class Journey extends Controller
                 $data['IMG'] = $filename;
             }
 
-            DB::table('JOURNEY')->insert($data);
+            DB::table('BLOG.JOURNEY')->insert($data);
 
             return back()->with('success', 'Journey berhasil ditambahkan!');
         } catch (\Exception $e) {
@@ -61,7 +61,7 @@ class Journey extends Controller
     public function destroy($id)
     {
         // Cari data berdasarkan ID
-        $journey = DB::table('JOURNEY')->where('ID', $id)->first();
+        $journey = DB::table('BLOG.JOURNEY')->where('ID', $id)->first();
 
         if (!$journey) {
             return redirect()->route('journey')->withErrors('Journey tidak ditemukan.');
@@ -75,7 +75,7 @@ class Journey extends Controller
             }
         }
 
-        DB::table('JOURNEY')->where('ID', $id)->delete();
+        DB::table('BLOG.JOURNEY')->where('ID', $id)->delete();
 
         return redirect()->route('journey')->with('success', 'Journey berhasil dihapus.');
     }
@@ -90,7 +90,7 @@ class Journey extends Controller
         ]);
 
         // Ambil data lama dari database
-        $oldData = DB::table('JOURNEY')->where('ID', $id)->first();
+        $oldData = DB::table('BLOG.JOURNEY')->where('ID', $id)->first();
         if (!$oldData) {
             return redirect()->back()->withErrors(['Journey tidak ditemukan.']);
         }
@@ -115,20 +115,20 @@ class Journey extends Controller
             }
         }
 
-        DB::table('JOURNEY')->where('ID', $id)->update($updateData);
+        DB::table('BLOG.JOURNEY')->where('ID', $id)->update($updateData);
 
         return redirect()->route('journey')->with('success', 'Journey berhasil diperbarui!');
     }
 
     public function ourJourney()
     {
-        $data['listJourney'] = DB::table('JOURNEY')->orderBy('DATE', 'desc')->paginate(6);
+        $data['listJourney'] = DB::table('BLOG.JOURNEY')->orderBy('DATE', 'desc')->paginate(6);
         return view('ourjourney_v', $data);
     }
 
     public function getDetail($id)
     {
-        $journey = DB::table('JOURNEY')->where('ID', $id)->first(); // Assuming you have a Journey model
+        $journey = DB::table('BLOG.JOURNEY')->where('ID', $id)->first(); // Assuming you have a Journey model
 
         if ($journey) {
             return response()->json(['detail' => $journey->DETAIL]); // Return the detail as JSON
@@ -139,7 +139,7 @@ class Journey extends Controller
 
     public function getAll(): JsonResponse
     {
-        $journeys = DB::table('JOURNEY')->get();
+        $journeys = DB::table('BLOG.JOURNEY')->get();
         // Return as JSON response
         return response()->json([
             'success' => true,

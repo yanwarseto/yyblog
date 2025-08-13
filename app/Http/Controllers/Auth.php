@@ -34,7 +34,7 @@ class Auth extends Controller
         $hashedPassword = hash('sha1', md5($password));
 
 
-        $user = DB::table('T_USERS')->where('USERNAME', $username)->first();
+        $user = DB::table('BLOG.T_USERS')->where('USERNAME', $username)->first();
 
         if (!$user) {
             return back()->withErrors([
@@ -50,7 +50,7 @@ class Auth extends Controller
         }
 
         // Saving Log Login
-        DB::table('T_LOG')->insert([
+        DB::table('BLOG.T_LOG')->insert([
             'ID' => Str::uuid()->toString(),
             'USERNAME' => $user->USERNAME,
             'IP' => $request->ip(),

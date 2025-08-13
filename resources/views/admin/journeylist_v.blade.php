@@ -154,17 +154,22 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4 py-6 max-w-7xl mx-auto">
             @foreach ($listJourney as $l)
-                <div class="group relative mt-3 max-w-sm rounded overflow-hidden shadow-lg mx-auto">
-                    {{-- Gambar --}}
-                    <img class="w-full h-48 w-80 object-cover" src="storage/perjalanan/{{ $l->IMG }}"
-                        alt="Journey image">
+                <div
+                    class="group relative bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
 
-                    {{-- Tombol Edit & Delete muncul saat hover --}}
-                    <div class="absolute top-2 right-2 hidden group-hover:flex space-x-2 z-10">
+                    {{-- Gambar --}}
+                    <div class="overflow-hidden rounded-t-xl">
+                        <img class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300"
+                            src="{{ asset('storage/perjalanan/' . $l->IMG) }}" alt="Journey image">
+                    </div>
+
+                    {{-- Tombol Edit & Delete muncul saat hover (posisi atas kanan) --}}
+                    <div
+                        class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2 z-20">
                         <a href="javascript:void(0)"
-                            class="editBtn bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded shadow"
+                            class="editBtn bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded shadow"
                             data-id="{{ $l->ID }}" data-judul="{{ $l->JUDUL }}"
                             data-tag="{{ $l->TAG }}" data-deskripsi="{{ $l->DETAIL }}"
                             data-img="{{ $l->IMG }}">
@@ -175,32 +180,35 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit"
-                                class="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded shadow">Delete</button>
+                                class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded shadow">Delete</button>
                         </form>
                     </div>
 
-                    {{-- Judul --}}
-                    <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2">{{ $l->JUDUL }}</div>
-                        <p style="color: #555">{{ $l->DATE }}</p>
-                    </div>
+                    {{-- Konten --}}
+                    <div class="flex flex-col flex-grow p-5">
+                        {{-- Judul --}}
+                        <h3 class="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">{{ $l->JUDUL }}</h3>
+                        {{-- Date --}}
+                        <p class="text-sm text-gray-500 mb-3">{{ \Carbon\Carbon::parse($l->DATE)->format('d M Y') }}
+                        </p>
 
-                    {{-- Tags --}}
-                    <div class="px-6 pt-4 pb-2">
-                        @foreach (explode(',', $l->TAG) as $tag)
-                            @php $tag = trim($tag); @endphp
-                            @if ($tag != '')
-                                <span
-                                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                    #{{ $tag }}
-                                </span>
-                            @endif
-                        @endforeach
+                        {{-- Tags --}}
+                        <div class="mt-auto flex flex-wrap gap-2">
+                            @foreach (explode(',', $l->TAG) as $tag)
+                                @php $tag = trim($tag); @endphp
+                                @if ($tag != '')
+                                    <span
+                                        class="bg-gray-200 text-gray-700 text-xs font-medium px-3 py-1 rounded-full hover:bg-gray-300 cursor-default select-none">
+                                        #{{ $tag }}
+                                    </span>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             @endforeach
-
         </div>
+
 
         {{-- Edit Journey --}}
         <div id="editJourneyModal"
@@ -315,8 +323,8 @@
                 'insertdatetime media table paste code help wordcount'
             ],
             toolbar: 'undo redo | formatselect | bold italic backcolor | \
-                                                                                                                                                                                                                                                                                                                                                  alignleft aligncenter alignright alignjustify | \
-                                                                                                                                                                                                                                                                                                                                                  bullist numlist outdent indent | removeformat | help',
+                                                                                                                                                                                                                                                                                                                                                      alignleft aligncenter alignright alignjustify | \
+                                                                                                                                                                                                                                                                                                                                                      bullist numlist outdent indent | removeformat | help',
             height: 300 // Set the height of the editor
         });
 

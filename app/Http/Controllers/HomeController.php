@@ -11,7 +11,7 @@ class HomeController  extends Controller
 {
     public function index()
     {
-        $data['listJourney'] = DB::table('JOURNEY')
+        $data['listJourney'] = DB::table('BLOG.JOURNEY')
             ->orderBy('DATE', 'desc')
             ->limit(3)
             ->get();

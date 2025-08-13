@@ -19,7 +19,7 @@ class Dashboard extends Controller
     public function logout(Request $request)
     {
         $username = session('username');
-        DB::table('T_LOG')->insert([
+        DB::table('BLOG.T_LOG')->insert([
             'ID' => Str::uuid()->toString(),
             'USERNAME' => $username,
             'IP' => $request->ip(),
