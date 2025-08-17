@@ -195,7 +195,7 @@
                 </div>
             </div>
             <div class="md:w-1/2 relative ">
-                <img src="img/yny.jpeg" alt="Yan Yen Blog"
+                <img src="img/yny2.jpg" alt="Yan Yen Blog"
                     class="w-full h-[600px] rounded-lg border-8 border-black shadow-2xl" style="object-fit: cover;" />
                 <div class="absolute -top-8 -right-8 text-6xl jump-animate">🌟</div>
                 <div class="absolute -bottom-4 -left-4 text-4xl coin-spin">🌓</div>
